@@ -6,14 +6,21 @@ public class DraggableSpellUI : MonoBehaviour, IBeginDragHandler, IDragHandler, 
     private CanvasGroup canvasGroup;
     public int originalIndex;
     public Transform originalParent;
-    void Awake() => canvasGroup = GetComponentInParent<CanvasGroup>();
+    void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        Debug.Log($"DraggableSpellUI Awake: {gameObject.name}, canvasGroup found: {canvasGroup != null}");
+    } 
     private static DraggableSpellUI currentlyDraggedItem;
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (canvasGroup)
         {
-            originalIndex = transform.GetSiblingIndex();
             originalParent = transform.parent;
+            originalIndex = originalParent.GetSiblingIndex();
+            
+            Debug.Log($"OnBeginDrag: Spell {gameObject.name} starting from slot index {originalIndex}");
+        
             canvasGroup.blocksRaycasts = false;
             canvasGroup.alpha = 0.6f;
         }

@@ -39,39 +39,38 @@ public class SpellQueueUIManager : MonoBehaviour
         {
             GameObject icon = Instantiate(spellIconPrefab, slotTransform);
             icon.GetComponent<Image>().sprite = spell.spellIcon;
-            icon.GetComponent<DraggableSpellUI>(); // Make sure it has this component
+            icon.GetComponent<DraggableSpellUI>();
         }
     }
-    public void SwapSpellsInUI(DraggableSpellUI spell1, DraggableSpellUI spell2)
+    public void SwapSpellsInUI(DraggableSpellUI draggedSpell, DraggableSpellUI existingSpell)
     {
-        if (spell1 == null || spell2 == null) return;
+        if (draggedSpell == null || existingSpell == null) return;
 
-        Transform parent1 = spell1.transform.parent;
-        Transform parent2 = spell2.transform.parent;
+        // Get slot indices from the original positions
+        int index1 = draggedSpell.originalIndex;
+        int index2 = existingSpell.transform.parent.GetSiblingIndex();
+
+        Debug.Log($"SwapSpellsInUI Debug:");
+        Debug.Log($"  Dragged spell original index: {index1}");
+        Debug.Log($"  Existing spell slot index: {index2}");
+        Debug.Log($"  Dragged spell name: {draggedSpell.gameObject.transform.parent.name}");
+        Debug.Log($"  Existing spell name: {existingSpell.gameObject.name}");
+
+        // Store the target parent (where draggedSpell is being dropped)
+        Transform targetParent = existingSpell.transform.parent;
         
-        // Get indices from slot positions
-        int index1 = parent1.GetSiblingIndex();
-        int index2 = parent2.GetSiblingIndex();
+        // Move existing spell to dragged spell's original position
+        existingSpell.transform.SetParent(draggedSpell.originalParent);
+        existingSpell.transform.localPosition = Vector3.zero;
+        
+        // Move dragged spell to the target position
+        draggedSpell.transform.SetParent(targetParent);
+        draggedSpell.transform.localPosition = Vector3.zero;
 
-        // Swap UI elements
-        spell1.transform.SetParent(parent2);
-        spell1.transform.localPosition = Vector3.zero;
-        spell1.transform.localScale = Vector3.one;
-
-        spell2.transform.SetParent(parent1);
-        spell2.transform.localPosition = Vector3.zero;
-        spell2.transform.localScale = Vector3.one;
-
-        // Update drag components
-        spell1.originalParent = parent2;
-        spell1.originalIndex = index2;
-        spell2.originalParent = parent1;
-        spell2.originalIndex = index1;
-
-        // CRITICAL: Update data model
+        // Update backend
         spellQueue.SwapActiveSpells(index1, index2);
     }
-    public void RefreshAllSlots()
+   public void RefreshAllSlots()
     {
         for (int i = 0; i < queue.Length; i++)
         {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9062865003756895407}
   - component: {fileID: 3618435066888254594}
   - component: {fileID: -1357697817012013033}
+  - component: {fileID: -993966813984619051}
   m_Layer: 5
   m_Name: SpellIcon
   m_TagString: Untagged
@@ -90,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalIndex: 0
+  originalParent: {fileID: 0}
 --- !u!114 &-1357697817012013033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,3 +106,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 0
+--- !u!225 &-993966813984619051
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6442040613866146725}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

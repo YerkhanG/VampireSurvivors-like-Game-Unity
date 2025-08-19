@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: FireBall
   spellIcon: {fileID: -152043364318539087, guid: f733a1b63706a3141baf889f27de0652, type: 3}
-  spellCooldown: 0.1
+  spellCooldown: 0.2
   EffectPrefab: {fileID: 0}
   damage: 200
-  projectileSpeed: 20
+  projectileSpeed: 15
   pierce: 0
   projectilePrefab: {fileID: 4263779792051248626, guid: 2f3e4b65b3b398d4b94a4c1bcda4d34c, type: 3}
   castDirection: {x: 1, y: 0}

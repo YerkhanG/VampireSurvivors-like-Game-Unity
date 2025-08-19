@@ -13,10 +13,6 @@ public class SpellQueue : MonoBehaviour
     {
         mouseActions = new NewActions();
         uiManager = FindAnyObjectByType<SpellQueueUIManager>();
-        // Initialize queue with nulls
-        // for (int i = 0; i < 7; i++) {
-        //     queue.Add(null);
-        // }
     }
     void OnEnable()
     {
@@ -77,11 +73,10 @@ public class SpellQueue : MonoBehaviour
     {
         if (index1 < 0 || index2 < 0 || index1 >= queue.Count || index2 >= queue.Count) return;
         BaseSpell temp = queue[index1];
+        Debug.Log("Trying to change spells in backend: " + queue[index1].spellName + " " + queue[index2].spellName);
         queue[index1] = queue[index2];
         queue[index2] = temp;
+        Debug.Log("Changed spells in backend: " + index1 + " " + index2);
     }
-    // public void AddSpell(BaseSpell spell) {
-    //     queue.Add(spell);
-    // } 
     public void RemoveSpell(int index) => queue.RemoveAt(index);
 }
