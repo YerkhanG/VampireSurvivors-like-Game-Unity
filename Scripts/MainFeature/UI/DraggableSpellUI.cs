@@ -5,26 +5,40 @@ public class DraggableSpellUI : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 {
     private CanvasGroup canvasGroup;
     public int originalIndex;
+    public int originalBackpackIndex;
+    public int originalQueueIndex;
     public Transform originalParent;
+    public bool isFromBackpack = false;
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         Debug.Log($"DraggableSpellUI Awake: {gameObject.name}, canvasGroup found: {canvasGroup != null}");
     } 
-    private static DraggableSpellUI currentlyDraggedItem;
+    // private static DraggableSpellUI currentlyDraggedItem;
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (canvasGroup)
         {
             originalParent = transform.parent;
             originalIndex = originalParent.GetSiblingIndex();
+
+            if (originalParent.GetComponent<BackpackSlotUI>())
+            {
+                isFromBackpack = true;
+                originalBackpackIndex = originalParent.GetComponent<BackpackSlotUI>().backpackSlotIndex;
+            }
+            else
+            {
+                isFromBackpack = false;
+                originalQueueIndex = originalIndex;
+            }
             
             Debug.Log($"OnBeginDrag: Spell {gameObject.name} starting from slot index {originalIndex}");
         
             canvasGroup.blocksRaycasts = false;
             canvasGroup.alpha = 0.6f;
         }
-        currentlyDraggedItem = this;
+        // currentlyDraggedItem = this;
         transform.SetParent(GameObject.FindGameObjectWithTag("MainFeatureCanvas").transform);
     }
 
@@ -35,13 +49,15 @@ public class DraggableSpellUI : MonoBehaviour, IBeginDragHandler, IDragHandler, 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        currentlyDraggedItem = null;
+        // currentlyDraggedItem = null;
         if (canvasGroup)
         {
             canvasGroup.blocksRaycasts = true;
             canvasGroup.alpha = 1f;
         }
-        if (eventData.pointerCurrentRaycast.gameObject == null || eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<SpellSlotUI>() == null)
+        if (eventData.pointerCurrentRaycast.gameObject == null || 
+            (eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<SpellSlotUI>() == null &&
+             eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<BackpackSlotUI>() == null))
         {
             transform.SetParent(originalParent);
             transform.SetSiblingIndex(originalIndex);

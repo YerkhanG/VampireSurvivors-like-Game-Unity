@@ -4,13 +4,16 @@ using UnityEngine;
 public class SpellQueue : MonoBehaviour
 {
     public List<BaseSpell> queue = new List<BaseSpell>(7); 
-    public List<BaseSpell> spellLibrary = new List<BaseSpell>(30);
-    private float _currentCooldown = 3f;
+    private float _currentCooldown;
     private int _currentIndex = 0;
     private NewActions mouseActions;
     private SpellQueueUIManager uiManager;
     void Awake()
     {
+        for (int i = queue.Count; i < 7; i++)
+        {
+            queue.Add(null);
+        }
         mouseActions = new NewActions();
         uiManager = FindAnyObjectByType<SpellQueueUIManager>();
     }
@@ -39,12 +42,9 @@ public class SpellQueue : MonoBehaviour
     {
         if (_currentIndex >= queue.Count || queue[_currentIndex] == null)
         {
-            queue.RemoveAt(_currentIndex);
-            _currentIndex = Mathf.Clamp(_currentIndex, 0, queue.Count - 1);
-            if (queue.Count == 0) return;
+            _currentIndex = (_currentIndex + 1) % queue.Count;
+            return;
         }
-
-        // Get input
         Vector2 castDirection;
         try 
         {
@@ -63,11 +63,6 @@ public class SpellQueue : MonoBehaviour
         spell.Cast(transform, direction);
         _currentCooldown = spell.spellCooldown;
         _currentIndex = (_currentIndex + 1) % queue.Count;
-    }
-    public void EquipSpells(int libraryIndex, int spellQueueIndex)
-    {
-        queue[spellQueueIndex] = spellLibrary[libraryIndex];
-        uiManager.UpdateSpellIcon(spellQueueIndex, queue[spellQueueIndex]);
     }
     public void SwapActiveSpells(int index1, int index2)
     {

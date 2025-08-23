@@ -26,15 +26,12 @@ public class SpellQueueUIManager : MonoBehaviour
         if (slotIndex >= queue.Length) return;
 
         Transform slotTransform = queue[slotIndex].transform;
-
-        // Remove old icon if exists
         for (int i = slotTransform.childCount - 1; i >= 0; i--)
         {
             if (slotTransform.GetChild(i).GetComponent<DraggableSpellUI>() != null)
                 DestroyImmediate(slotTransform.GetChild(i).gameObject);
         }
 
-        // Add new icon if spell exists
         if (spell != null)
         {
             GameObject icon = Instantiate(spellIconPrefab, slotTransform);

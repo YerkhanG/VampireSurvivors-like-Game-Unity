@@ -6,11 +6,14 @@ public class SpellSlotUI : MonoBehaviour, IDropHandler
     public int queIndex;
     private SpellQueue spellQueue;
     private SpellQueueUIManager uiManager;
+
+    private SpellBackpackController spellBackpackController;
     public void Start()
     {
         queIndex = transform.GetSiblingIndex();
         spellQueue = FindAnyObjectByType<SpellQueue>();
         uiManager = FindAnyObjectByType<SpellQueueUIManager>();
+        spellBackpackController = FindAnyObjectByType<SpellBackpackController>();
         Debug.Log($"SpellSlotUI {gameObject.name} initialized with queIndex: {queIndex}");
     }
     public void OnDrop(PointerEventData eventData)
@@ -21,8 +24,11 @@ public class SpellSlotUI : MonoBehaviour, IDropHandler
         Debug.Log($"OnDrop: Dropped spell from index {draggedSpell.originalIndex} onto slot {queIndex}");
 
         DraggableSpellUI existingSpell = GetExistingSpell();
-
-        if (existingSpell != null && existingSpell != draggedSpell)
+        if (draggedSpell.isFromBackpack)
+        {
+            spellBackpackController.MoveSpellToQueue(draggedSpell.originalBackpackIndex,queIndex);
+        }
+        else if (existingSpell != null && existingSpell != draggedSpell)
         {
             uiManager.SwapSpellsInUI(draggedSpell, existingSpell);
         }

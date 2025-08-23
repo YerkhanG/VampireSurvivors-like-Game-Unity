@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: FireBall
   spellIcon: {fileID: -152043364318539087, guid: f733a1b63706a3141baf889f27de0652, type: 3}
-  spellCooldown: 0.2
+  spellCooldown: 1
   EffectPrefab: {fileID: 0}
   damage: 200
   projectileSpeed: 15

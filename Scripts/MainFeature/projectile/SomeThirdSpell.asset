@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: TridentSpell
   spellIcon: {fileID: 3507397081363183864, guid: f733a1b63706a3141baf889f27de0652, type: 3}
-  spellCooldown: 0.2
+  spellCooldown: 1
   EffectPrefab: {fileID: 0}
   damage: 500
   projectileSpeed: 15

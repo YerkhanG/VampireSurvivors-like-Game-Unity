@@ -40,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         moveInput = inputActions.Player.Move.ReadValue<Vector2>();
-
         if (moveInput.x != 0)
         {
             lastHorizontalVector = moveInput.x;
