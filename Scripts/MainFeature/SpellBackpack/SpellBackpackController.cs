@@ -45,6 +45,15 @@ public class SpellBackpackController : MonoBehaviour
     {
         isBackpackOpen = !isBackpackOpen;
         backpackPanel.SetActive(isBackpackOpen);
+
+        if (isBackpackOpen)
+        {
+            Time.timeScale = 0f; // Pause the game
+        }
+        else
+        {
+            Time.timeScale = 1f; // Resume the game
+        }
     }
     public void AddSpellToBackpack(BaseSpell spell, int index)
     {
