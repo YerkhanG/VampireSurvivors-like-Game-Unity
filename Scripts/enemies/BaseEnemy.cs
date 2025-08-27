@@ -7,6 +7,10 @@ using UnityEngine.Rendering;
 
 public abstract class BaseEnemy : MonoBehaviour, IDamageable
 {
+    [Header("XP Drop Settings")]
+    [SerializeField] private GameObject xpGemPrefab;
+    [SerializeField] private float xpDropAmount = 20f;
+
     [Header("Enemy Properties")]
     [SerializeField] protected float health;
     public GameObject enemyPrefab;
@@ -113,9 +117,28 @@ public abstract class BaseEnemy : MonoBehaviour, IDamageable
         health -= amount;
         if (health <= 0) Die();
     }
+    private void DropXPGems()
+    {
+        if (xpGemPrefab == null)
+        {
+            Debug.Log("There needs to be a xpGemPrefab");
+            return;
+        }
+
+        Vector3 dropPosition = transform.position;
+
+        GameObject gem = Instantiate(xpGemPrefab, dropPosition, Quaternion.identity);
+        XpGem xpGem = gem.GetComponent<XpGem>();
+
+        if (xpGem != null)
+        {
+            xpGem.SetXpValue(xpDropAmount);
+        }
+    }
 
     public virtual void Die()
     {
+        DropXPGems();
         Destroy(gameObject);
     }
 }

@@ -3,8 +3,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     PlayerMovement pl;
-    private float health = 100f;
-
+    [SerializeField]private float health = 100f;
+    public float CurrentHealth => health;
+    public float MaxHealth => 100f;
     public void Awake()
     {
         pl = GetComponent<PlayerMovement>();
