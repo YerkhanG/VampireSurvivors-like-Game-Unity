@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    public System.Action<float, float> HPAction;
     PlayerMovement pl;
     [SerializeField]private float health = 100f;
     public float CurrentHealth => health;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TakeDamage(float amount, GameObject damageSource)
     {
         health -= amount;
+        HPAction?.Invoke(health, MaxHealth);
         FlashRed();
         if (health <= 0) Die();
     }

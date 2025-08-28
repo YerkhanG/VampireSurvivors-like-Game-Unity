@@ -17,12 +17,15 @@ public class PlayerUI : MonoBehaviour
 
     public void Start()
     {
+
         if (playerController == null)
             playerController = FindAnyObjectByType<PlayerController>();
-        
+
         if (playerLevelSystem == null)
             playerLevelSystem = FindAnyObjectByType<PlayerLevelSystem>();
 
+        playerController.HPAction += UpdateHealthUI;
+        playerLevelSystem.XPAction += UpdateXpUI;
         if (playerLevelSystem != null)
         {
             playerLevelSystem.OnLevelUp.AddListener(UpdateLevelUI);
@@ -32,31 +35,25 @@ public class PlayerUI : MonoBehaviour
 
     private void UpdateAllUI()
     {
+        UpdateHealthUI(playerController.CurrentHealth, playerController.MaxHealth);
+        UpdateXpUI(playerLevelSystem.CurrentXP, playerLevelSystem.XPToNextLevel);
         UpdateLevelUI(playerLevelSystem.CurrentLevel);
-        UpdateHealthUI();
-        UpdateXpUI();
-   }
-
-    private void Update()
-    {
-        UpdateHealthUI();
-        UpdateXpUI();
     }
 
-    private void UpdateXpUI()
+    private void UpdateXpUI(float currentXp, float xpToNextLevel)
     {
-        if (xpSlider != null && playerLevelSystem != null)
+        if (xpSlider != null)
         {
-            xpSlider.value = playerLevelSystem.XPRatio;
+            xpSlider.value = currentXp / xpToNextLevel;
         }
     }
 
-    private void UpdateHealthUI()
+    private void UpdateHealthUI(float currentHealth, float maxHealth)
     {
         if (healthSlider != null && healthText != null)
         {
-            healthText.text = $"HP {playerController.CurrentHealth}";
-            healthSlider.value = playerController.CurrentHealth / playerController.MaxHealth;
+            healthSlider.value = currentHealth / maxHealth;
+            healthText.text = $"{currentHealth}/{maxHealth}";
         }
     }
 
@@ -65,6 +62,18 @@ public class PlayerUI : MonoBehaviour
         if (levelText != null)
         {
             levelText.text = $"level {arg0}";
+        }
+    }
+    
+    private void OnDestroy()
+    {
+        if (playerController != null)
+            playerController.HPAction -= UpdateHealthUI;
+        
+        if (playerLevelSystem != null)
+        {
+            playerLevelSystem.XPAction -= UpdateXpUI;
+            playerLevelSystem.OnLevelUp.RemoveListener(UpdateLevelUI);
         }
     }
 }
