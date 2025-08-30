@@ -9,5 +9,5 @@ public abstract class BaseSpell : ScriptableObject
     public float spellCooldown;
     public GameObject EffectPrefab;
 
-    public abstract void Cast(Transform caster, Vector2 direction);
+    public abstract void Cast(SpellCastContext context);
 } 

@@ -59,8 +59,8 @@ public class SpellQueue : MonoBehaviour
         BaseSpell spell = queue[_currentIndex];
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(castDirection.x, castDirection.y, Camera.main.nearClipPlane));
         Vector2 direction = (mouseWorldPos - transform.position).normalized;
-        
-        spell.Cast(transform, direction);
+        var context = new SpellCastContext(this,_currentIndex, transform,direction);
+        spell.Cast(context);
         _currentCooldown = spell.spellCooldown;
         _currentIndex = (_currentIndex + 1) % queue.Count;
     }

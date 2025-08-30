@@ -14,13 +14,13 @@ public class DamageSpell : BaseSpell
 
     public NewActions mouseAction;
 
-    public override void Cast(Transform caster, Vector2 direction)
+    public override void Cast(SpellCastContext context)
     {
 
         if (projectilePrefab == null) return;
         GameObject projectile = Instantiate(
             projectilePrefab,
-            caster.position,
+            context.caster.position,
             Quaternion.identity
         );
         Projectile proj = projectile.GetComponent<Projectile>();
@@ -29,7 +29,7 @@ public class DamageSpell : BaseSpell
             proj.Damage = damage;
             proj.Speed = projectileSpeed;
             proj.Pierce = pierce;
-            proj.Direction = direction.normalized;
+            proj.Direction = context.direction.normalized;
         }
         else
         {
