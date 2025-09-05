@@ -24,6 +24,7 @@ public class PlayerLevelSystem : MonoBehaviour
     public LevelUpEvent OnLevelUp;
 
     public System.Action<float, float> XPAction;
+    public System.Action<float> LevelUpPowerUpAction;
     private float CalculateXPForLevel(int level)
     {
         // Exponential formula: baseXP * (exponentialFactor ^ (level-1)) + linearFactor * (level-1)

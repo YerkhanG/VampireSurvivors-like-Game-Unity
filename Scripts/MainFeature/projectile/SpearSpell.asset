@@ -18,7 +18,7 @@ MonoBehaviour:
   EffectPrefab: {fileID: 0}
   damage: 200
   projectileSpeed: 15
+  projectileCount: 15
+  spreadAngle: 15
   pierce: 2
   projectilePrefab: {fileID: 999352578686026274, guid: bdd64bc8e239d374d8d8672b7605825b, type: 3}
-  castDirection: {x: 1, y: 0}
-  mousePosition: {x: 0, y: 0}

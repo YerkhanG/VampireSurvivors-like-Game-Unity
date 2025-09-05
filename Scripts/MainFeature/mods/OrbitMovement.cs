@@ -66,7 +66,6 @@ public class OrbitMovement : MonoBehaviour
     
     void OnDestroy()
     {
-        // Re-enable projectile component if orbit is destroyed early
         var projectile = GetComponent<Projectile>();
         if (projectile != null)
         {

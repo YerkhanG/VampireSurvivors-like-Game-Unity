@@ -72,7 +72,7 @@ public class SpellQueue : MonoBehaviour
         {
             spell.Cast(context);
         }
-        spell.Cast(context);
+        // spell.Cast(context);
         _currentCooldown = spell.spellCooldown;
         _currentIndex = (_currentIndex + 1) % queue.Count;
     }
