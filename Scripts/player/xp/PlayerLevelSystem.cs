@@ -24,7 +24,7 @@ public class PlayerLevelSystem : MonoBehaviour
     public LevelUpEvent OnLevelUp;
 
     public System.Action<float, float> XPAction;
-    public System.Action<float> LevelUpPowerUpAction;
+    public System.Action LevelUpPowerUpAction;
     private float CalculateXPForLevel(int level)
     {
         // Exponential formula: baseXP * (exponentialFactor ^ (level-1)) + linearFactor * (level-1)
@@ -50,7 +50,7 @@ public class PlayerLevelSystem : MonoBehaviour
         currentLevel++;
         XPAction?.Invoke(currentXP, XPToNextLevel);
         OnLevelUp?.Invoke(currentLevel);
-        
+        LevelUpPowerUpAction?.Invoke();
         Debug.Log($"Level Up! Now level {currentLevel}");
     }
     private void CheckForXPGems()

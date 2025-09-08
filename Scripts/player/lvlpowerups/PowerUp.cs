@@ -1,18 +1,17 @@
 using UnityEngine;
-
-public class PowerUp
+[CreateAssetMenu(fileName = "NewPowerUp", menuName = "PowerUps/PowerUp")] 
+public abstract class PowerUp : ScriptableObject
 {
-    private string name;
-    private string description;
-    private string rarity;
-    private Sprite sprite;
-    private System.Action onSelect;
+    public string name;
+    public string description;
+    public Rarity rarity;
+    public Sprite sprite;
+    public abstract void OnSelected(PowerUpContext context);
 
-    public PowerUp(string name, string description,string rarity,  System.Action onSelect)
-    {
-        this.name = name;
-        this.rarity = rarity;
-        this.description = description;
-        this.onSelect = onSelect;
-    }
+    // public PowerUp(string name, string description,string rarity)
+    // {
+    //     this.name = name;
+    //     this.rarity = rarity;
+    //     this.description = description;
+    // }
 }
