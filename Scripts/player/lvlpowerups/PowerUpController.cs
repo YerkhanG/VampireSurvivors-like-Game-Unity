@@ -1,15 +1,22 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 public class PowerUpController : MonoBehaviour
 {
-    private PlayerLevelSystem playerLevelSystem;
-    private PowerUpUI uiManager;
-    private PowerUpsDatabase powerUpsDatabase;
+    public PlayerLevelSystem playerLevelSystem;
+    public PowerUpUI uiManager;
+    public PowerUpsDatabase powerUpsDatabase;
+    public PowerUpContext context;
     void Start()
     {
-        playerLevelSystem = FindAnyObjectByType<PlayerLevelSystem>();
-        powerUpsDatabase = FindAnyObjectByType<PowerUpsDatabase>();
-        uiManager = FindAnyObjectByType<PowerUpUI>();
+        uiManager.OnPowerCardSelected += ApplyPowerUp;
     }
+
+    private void ApplyPowerUp(PowerUp up)
+    {
+        up.OnSelected(context);
+    }
+
     private void OnEnable()
     {
         playerLevelSystem.LevelUpPowerUpAction += HandleLevelUp;
@@ -18,9 +25,18 @@ public class PowerUpController : MonoBehaviour
     {
         playerLevelSystem.LevelUpPowerUpAction -= HandleLevelUp;
     }
+    private void OnDestroy()
+    {
+        // Unsubscribe to prevent memory leaks
+        if (uiManager != null)
+        {
+            uiManager.OnPowerCardSelected -= ApplyPowerUp;
+        }
+    }
 
     private void HandleLevelUp()
-    {   
-
+    {
+        List<PowerUp> p = powerUpsDatabase.GetThreeRandomPowerUps();
+        uiManager.PowerUpLevelUI(p);
     }   
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerUpContext : MonoBehaviour
@@ -6,13 +7,13 @@ public class PowerUpContext : MonoBehaviour
     public PlayerLevelSystem LevelSystem { get; private set; }
     public PlayerMovement PlayerMovement { get; private set; }
     public SpellQueue SpellQueue { get; private set; }
-    public DamageSpell DamageSpell{ get; private set; }
+    public DamageSpell[] AllDamageSpells{ get; private set; }
     private void Awake()
     {
-        Health = FindAnyObjectByType<PlayerController>();
-        LevelSystem = FindAnyObjectByType<PlayerLevelSystem>();
-        PlayerMovement = FindAnyObjectByType<PlayerMovement>();
-        SpellQueue = FindAnyObjectByType<SpellQueue>();
-        DamageSpell = FindAnyObjectByType<DamageSpell>();
+        Health = GetComponent<PlayerController>();
+        LevelSystem = GetComponent<PlayerLevelSystem>();
+        PlayerMovement = GetComponent<PlayerMovement>();
+        SpellQueue = GetComponent<SpellQueue>();
+        AllDamageSpells = FindObjectsByType<DamageSpell>(FindObjectsInactive.Include, FindObjectsSortMode.None);
     }
 }
