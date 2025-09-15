@@ -2499,9 +2499,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be897e97e26e81409bd57bdec147dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonPrefab: {fileID: -8735294353187356506, guid: 196a4c26074a13240aefc233ff8cb651, type: 3}
+  baseEnemyPrefab: {fileID: -8735294353187356506, guid: 196a4c26074a13240aefc233ff8cb651, type: 3}
   baseSpawnRate: 1
   spawnRadius: 5
+  _mainCamera: {fileID: 0}
 --- !u!4 &1585207219
 Transform:
   m_ObjectHideFlags: 0

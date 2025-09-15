@@ -4,7 +4,6 @@ using UnityEngine;
 public class ChunkTrigger : MonoBehaviour
 {
     MapController mc;
-
     public GameObject targetMap;
 
     void Start()

@@ -10,11 +10,7 @@ public class RegularSkeletonEnemy : BaseEnemy
 
     private EnemyMovementController _movement;
 
-    protected override float LastSpawnTime { get; set; }
-    protected override bool IsSpawningEnabled {  get; set; } = true ;
-    protected override float SpawnRateMultiplier { get; set; } = 1f;
-
-    public void Initialize()
+    public override void Initialize()
     {
         health = skeletonHealth;
         _movement = GetComponent<EnemyMovementController>();
@@ -24,8 +20,4 @@ public class RegularSkeletonEnemy : BaseEnemy
         }
     }
 
-    protected override void InitializeEnemy()
-    {
-        throw new System.NotImplementedException();
-    }
 }
