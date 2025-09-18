@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public struct SpellCastContext
 {
     public SpellQueue spellQueue;

@@ -6,4 +6,8 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(1);
     }
+    public void OpenStore()
+    {
+        SceneManager.LoadSceneAsync(3);
+    }
 }

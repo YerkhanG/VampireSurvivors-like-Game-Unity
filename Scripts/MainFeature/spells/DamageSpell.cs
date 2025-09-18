@@ -1,6 +1,5 @@
-using System;
-using System.Security.Cryptography;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "NewDamageSpell", menuName = "Spells/DamageSpells")]
 public class DamageSpell : BaseSpell
 {
@@ -10,6 +9,7 @@ public class DamageSpell : BaseSpell
     public int projectileCount = 1;
     public float spreadAngle = 15f;
     public float pierce = 0f;
+    public float timeToLive = 2f;
     public GameObject projectilePrefab;
 
     public override void Cast(SpellCastContext context)
@@ -83,6 +83,7 @@ public class DamageSpell : BaseSpell
             proj.Speed = projectileSpeed;
             proj.Direction = direction;
             proj.Pierce = pierce;
+            proj.TTL = timeToLive;
         }
         else
         {

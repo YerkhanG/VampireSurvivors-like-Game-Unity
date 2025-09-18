@@ -18,7 +18,7 @@ MonoBehaviour:
   EffectPrefab: {fileID: 0}
   damage: 200
   projectileSpeed: 15
-  projectileCount: 15
+  projectileCount: 100
   spreadAngle: 15
   pierce: 2
   projectilePrefab: {fileID: 999352578686026274, guid: bdd64bc8e239d374d8d8672b7605825b, type: 3}
