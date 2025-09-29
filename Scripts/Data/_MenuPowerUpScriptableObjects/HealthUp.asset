@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95bcd9f558954bc58d8fa32abf4fdbe3, type: 3}
+  m_Name: HealthUp
+  m_EditorClassIdentifier: 
+  ID: 0a04fd36-3d61-4f2e-baea-82d4a30f1628
+  cost: 0
+  maxLevel: 10
+  currentLevel: 1
+  description: increases max health
+  shopItemName: Bigger health pool
+  menuPowerSprite: {fileID: -2830402100436832523, guid: eaaab189850ddd14b8548910c0d8c41e, type: 3}
+  healthIncrease: 50

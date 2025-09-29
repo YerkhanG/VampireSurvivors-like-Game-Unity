@@ -15,10 +15,15 @@ MonoBehaviour:
   spellName: Spear
   spellIcon: {fileID: -6606483387264764639, guid: f733a1b63706a3141baf889f27de0652, type: 3}
   spellCooldown: 1
-  EffectPrefab: {fileID: 0}
+  hitEffectPrefab: {fileID: 0}
+  missEffectPrefab: {fileID: 0}
+  castEffectPrefab: {fileID: 0}
+  castSound: {fileID: 0}
+  hitSound: {fileID: 0}
   damage: 200
   projectileSpeed: 15
   projectileCount: 100
   spreadAngle: 15
-  pierce: 2
+  pierce: 1
+  timeToLive: 2
   projectilePrefab: {fileID: 999352578686026274, guid: bdd64bc8e239d374d8d8672b7605825b, type: 3}

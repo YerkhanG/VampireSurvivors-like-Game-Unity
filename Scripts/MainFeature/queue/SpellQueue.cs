@@ -123,7 +123,7 @@ public class SpellQueue : MonoBehaviour
             proj.Pierce = spell.pierce;
             proj.Direction = context.direction.normalized;
         }
-        
+        proj.SetSpell(spell);
         // Apply all projectile modifiers
         foreach (var modifier in modifiers)
         {
@@ -135,7 +135,7 @@ public class SpellQueue : MonoBehaviour
     {
         if (index1 < 0 || index2 < 0 || index1 >= queue.Count || index2 >= queue.Count) return;
         BaseSpell temp = queue[index1];
-        Debug.Log("Trying to change spells in backend: " + queue[index1].spellName + " " + queue[index2].spellName);
+        // Debug.Log("Trying to change spells in backend: " + queue[index1].spellName + " " + queue[index2].spellName);
         queue[index1] = queue[index2];
         queue[index2] = temp;
         Debug.Log("Changed spells in backend: " + index1 + " " + index2);

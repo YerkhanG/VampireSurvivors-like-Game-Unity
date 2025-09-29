@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-
 public class ForkingProjectile : MonoBehaviour
 {
     public float forkingRadius = 25f;
@@ -9,6 +8,7 @@ public class ForkingProjectile : MonoBehaviour
     private Projectile projectile;
     private GameObject projectilePrefab;
     private BaseEnemy lastHitEnemy;
+    private bool hasForked = false;
     void Awake()
     {
         Debug.Log("Awake at 14 forking");
@@ -18,6 +18,7 @@ public class ForkingProjectile : MonoBehaviour
             enabled = false;
             return;
         }
+        GetProjectilePrefabFromSpell();
     }
     void OnEnable()
     {
@@ -27,14 +28,28 @@ public class ForkingProjectile : MonoBehaviour
     {
         projectile.OnEnemyHit -= HandleEnemyHit;
     }
-
+   private void GetProjectilePrefabFromSpell()
+    {
+        var spell = GetSourceSpell();
+        if (spell is DamageSpell damageSpell)
+        {
+            projectilePrefab = damageSpell.projectilePrefab;
+        }
+    }
+    
+    private BaseSpell GetSourceSpell()
+    {
+        var field = typeof(Projectile).GetField("sourceSpell", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        return field?.GetValue(projectile) as BaseSpell;
+    }
     private void HandleEnemyHit(BaseEnemy enemy, GameObject @object)
     {
-        if (forkingCount > 0)
+        if (!hasForked && forkingCount > 0)
         {
+            hasForked = true;
             lastHitEnemy = enemy;
             ForkProjectile(enemy.transform.position);
-            forkingCount--;
             lastHitEnemy = null;
         }
     }
@@ -45,15 +60,10 @@ public class ForkingProjectile : MonoBehaviour
         Collider2D nearestEnemy = FindNearestEnemy(pointOfForking);
         if (nearestEnemy != null)
         {
-            // GameObject newProjPre = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-            // Projectile newProj = newProjPre.GetComponent<Projectile>();
-            Projectile newProj = Instantiate(projectile, transform.position, Quaternion.identity);
-            // if (newProj == null)
-            // {
-            //     Debug.LogError("Instantiated prefab does not have a Projectile component!", newProjPre);
-            //     Destroy(newProjPre);
-            //     return;
-            // }
+            GameObject newProjGO = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Projectile newProj = newProjGO.GetComponent<Projectile>();
+            // Projectile newProj = Instantiate(projectile, transform.position, Quaternion.identity);
+
             newProj.Damage = projectile.Damage;
             newProj.Pierce = projectile.Pierce;
             newProj.Direction = (nearestEnemy.transform.position - transform.position).normalized;
@@ -62,8 +72,9 @@ public class ForkingProjectile : MonoBehaviour
 
             var newForkingMod = newProj.gameObject.AddComponent<ForkingProjectile>();
             newForkingMod.forkingRadius = forkingRadius;
-            newForkingMod.forkingCount = forkingCount;
+            newForkingMod.forkingCount = forkingCount - 1;
             newForkingMod.enemyLayer = enemyLayer;
+            newForkingMod.projectilePrefab = projectilePrefab;
         }
     }
     private Collider2D FindNearestEnemy(Vector3 centerPosition)

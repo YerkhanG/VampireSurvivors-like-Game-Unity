@@ -13,8 +13,8 @@ public class DamageSpell : BaseSpell
     public GameObject projectilePrefab;
 
     public override void Cast(SpellCastContext context)
-    {
-
+    {   
+        PlayCastEffect(context.caster.position, context.direction);
         if (projectilePrefab == null) return;
         Vector3 direction = context.direction.normalized;
         if (projectileCount == 1)
@@ -77,6 +77,7 @@ public class DamageSpell : BaseSpell
         );
 
         Projectile proj = projectile.GetComponent<Projectile>();
+        proj.SetSpell(this);
         if (proj != null)
         {
             proj.Damage = damage;

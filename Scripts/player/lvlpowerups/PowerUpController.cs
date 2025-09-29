@@ -27,7 +27,6 @@ public class PowerUpController : MonoBehaviour
     }
     private void OnDestroy()
     {
-        // Unsubscribe to prevent memory leaks
         if (uiManager != null)
         {
             uiManager.OnPowerCardSelected -= ApplyPowerUp;

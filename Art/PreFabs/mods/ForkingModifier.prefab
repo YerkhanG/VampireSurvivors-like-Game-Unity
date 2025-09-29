@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forkingCount: 2
-  forkingRadius: 3000
+  forkingRadius: 300
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8

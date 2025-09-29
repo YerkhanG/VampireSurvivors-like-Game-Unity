@@ -42,9 +42,7 @@ public class PowerUpsDatabase : MonoBehaviour
         for (int i = shuffledList.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
-            PowerUp temp = shuffledList[i];
-            shuffledList[i] = shuffledList[j];
-            shuffledList[j] = temp;
+            (shuffledList[i], shuffledList[j]) = (shuffledList[j], shuffledList[i]);
         }
         return shuffledList.GetRange(0,takeCount);
     }

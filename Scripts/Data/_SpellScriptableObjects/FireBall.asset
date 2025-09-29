@@ -15,10 +15,15 @@ MonoBehaviour:
   spellName: FireBall
   spellIcon: {fileID: -152043364318539087, guid: f733a1b63706a3141baf889f27de0652, type: 3}
   spellCooldown: 1
-  EffectPrefab: {fileID: 0}
+  hitEffectPrefab: {fileID: 1796152808398480665, guid: 54d8423c36170ce47bd9b87bd06319bb, type: 3}
+  missEffectPrefab: {fileID: 0}
+  castEffectPrefab: {fileID: 0}
+  castSound: {fileID: 0}
+  hitSound: {fileID: 0}
   damage: 200
   projectileSpeed: 15
-  pierce: 0
+  projectileCount: 1
+  spreadAngle: 15
+  pierce: 3
+  timeToLive: 2
   projectilePrefab: {fileID: 4263779792051248626, guid: 2f3e4b65b3b398d4b94a4c1bcda4d34c, type: 3}
-  castDirection: {x: 1, y: 0}
-  mousePosition: {x: 0, y: 0}
