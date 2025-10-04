@@ -1,10 +1,29 @@
-# Unity specific ignores
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
 
-# TextMesh Pro plugin
-/TextMesh Pro/
+# Asset meta data should only be ignored when the corresponding asset is also ignored
+![Aa]ssets/**/*.meta
+
+# Art assets and packages
+Assets/Art/
+Assets/PixelFX_vol1/
+Assets/Stylized Lava Materials/
+Assets/TextMesh Pro/
+
+# Third-party packages
+Assets/AssetStoreTools*
+Assets/ThirdParty/
+
+# Unity temporary files
+*.pidb.meta
+*.pdb.meta
+sysinfo.txt
+*.apk
+*.aab
+*.unitypackage
