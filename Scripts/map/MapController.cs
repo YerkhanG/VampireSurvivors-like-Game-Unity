@@ -100,8 +100,4 @@ public class MapController : MonoBehaviour
             }
         }
     }
-    public void SetCurrentChunk(GameObject chunk)
-    {
-        currentChunk = chunk;
-    }
 }

@@ -10,7 +10,21 @@ public class SpellQueue : MonoBehaviour
     private NewActions mouseActions;
     private SpellQueueUIManager uiManager;
 
+    public float ProjectileSpeedModifier { get; set; } = 1;
+
     public List<GameObject> spellMods = new();
+
+
+    private bool _cameraInitialized= false;
+    private Camera _mainCamera;
+    private void InitializeCamera()
+    {
+        if (!_cameraInitialized)
+        {
+            _mainCamera = Camera.main;
+            _cameraInitialized = true;
+        }
+    }
     void Awake()
     {
         for (int i = queue.Count; i < 7; i++)
@@ -19,6 +33,7 @@ public class SpellQueue : MonoBehaviour
         }
         mouseActions = new NewActions();
         uiManager = FindAnyObjectByType<SpellQueueUIManager>();
+        InitializeCamera();
     }
     void OnEnable()
     {
@@ -58,9 +73,18 @@ public class SpellQueue : MonoBehaviour
             Debug.LogError("Failed to read cast input: " + e.Message);
             return;
         }
+        if (!_mainCamera)
+        {
+            InitializeCamera(); // Try to reinitialize if camera became null
+            if (_mainCamera == null) 
+            {
+                Debug.LogWarning("Main camera not found!");
+                return;
+            }
+        }
 
         BaseSpell spell = queue[_currentIndex];
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(castDirection.x, castDirection.y, Camera.main.nearClipPlane));
+        Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(new Vector3(castDirection.x, castDirection.y, _mainCamera.nearClipPlane));
         Vector2 direction = (mouseWorldPos - transform.position).normalized;
         var context = new SpellCastContext(this,_currentIndex, transform,direction);
         if (spellMods.Count > 0 && spell is not ModifySpell)
@@ -97,11 +121,14 @@ public class SpellQueue : MonoBehaviour
         // Custom cast logic that applies projectile modifiers
         if (spellCopy is DamageSpell damageSpell && modifiers.Count > 0)
         {
+            damageSpell.projectileSpeed *= ProjectileSpeedModifier;
             CastModifiedDamageSpell(damageSpell, context, modifiers);
         }
         else
         {
-            spellCopy.Cast(context);
+            var damageSpellCopy = (DamageSpell)spellCopy;
+            damageSpellCopy.projectileSpeed *= ProjectileSpeedModifier;
+            damageSpellCopy.Cast(context);
         }
     }
 
@@ -116,7 +143,7 @@ public class SpellQueue : MonoBehaviour
         );
         
         Projectile proj = projectile.GetComponent<Projectile>();
-        if (proj != null)
+        if (proj)
         {
             proj.Damage = spell.damage;
             proj.Speed = spell.projectileSpeed;
@@ -134,10 +161,7 @@ public class SpellQueue : MonoBehaviour
     public void SwapActiveSpells(int index1, int index2)
     {
         if (index1 < 0 || index2 < 0 || index1 >= queue.Count || index2 >= queue.Count) return;
-        BaseSpell temp = queue[index1];
-        // Debug.Log("Trying to change spells in backend: " + queue[index1].spellName + " " + queue[index2].spellName);
-        queue[index1] = queue[index2];
-        queue[index2] = temp;
+        (queue[index1], queue[index2]) = (queue[index2], queue[index1]);
         Debug.Log("Changed spells in backend: " + index1 + " " + index2);
     }
     public void RemoveSpell(int index) => queue.RemoveAt(index);

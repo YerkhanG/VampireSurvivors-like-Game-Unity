@@ -15,7 +15,7 @@ public class DamageSpell : BaseSpell
     public override void Cast(SpellCastContext context)
     {   
         PlayCastEffect(context.caster.position, context.direction);
-        if (projectilePrefab == null) return;
+        if (!projectilePrefab) return;
         Vector3 direction = context.direction.normalized;
         if (projectileCount == 1)
         {
@@ -88,7 +88,7 @@ public class DamageSpell : BaseSpell
         }
         else
         {
-            Debug.LogError("Projectile script missing on projectilePrefab!");
+            Debug.Log("Projectile script missing on projectilePrefab!");
         }
     }
 }

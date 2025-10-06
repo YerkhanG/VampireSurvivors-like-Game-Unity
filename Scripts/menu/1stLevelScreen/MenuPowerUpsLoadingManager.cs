@@ -18,20 +18,22 @@ namespace menu._1stLevelScreen
 
         private void LoadPowerUps()
         {
-            if (MenuPowerUpController.PowerUps != null)
+            if (MenuPowerUpController.PowerUps == null || 
+                MenuPowerUpController.PowerUps.Count == 0)
             {
-                foreach (var m in MenuPowerUpController.PowerUps)
-                {
-                    var foundPowerUp = menuPowerUps.Find(p => p.ID == m.menuPowerUpID);
-                    if (foundPowerUp != null)
-                    {
-                        foundPowerUp.ApplyEffect(context,m.level);
-                    }
-                }   
+                Debug.Log("Nothing to load - PowerUps is null or empty");
+                return;
             }
-            else
+
+            foreach (var m in MenuPowerUpController.PowerUps)
             {
-                Debug.Log("Nothing to load");
+                if (m == null) continue; // Skip null entries
+        
+                var foundPowerUp = menuPowerUps.Find(p => p.ID == m.menuPowerUpID);
+                if (foundPowerUp != null)
+                {
+                    foundPowerUp.ApplyEffect(context, m.level);
+                }
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemySpawner : MonoBehaviour
@@ -9,7 +10,7 @@ public class BaseEnemySpawner : MonoBehaviour
     private float _spawnRateMultiplier = 1f;
     private float _lastSpawnTime = 0f;
     public Camera _mainCamera;
-
+    public List<BaseEnemy> enemies = new List<BaseEnemy>();
 
     public bool SpawningEnabled
     {
@@ -48,15 +49,16 @@ public class BaseEnemySpawner : MonoBehaviour
     {
         Vector3 spawnPos = GetRandomSpawnPos();
         var newEnemy = Instantiate(baseEnemyPrefab, spawnPos, Quaternion.identity);
+        enemies.Add(newEnemy);
         newEnemy.Initialize();
     }
 
-    private Vector3 GetRandomSpawnPos()
+    public Vector3 GetRandomSpawnPos()
     {
-        if (_mainCamera == null)
+        if (!_mainCamera)
         {
             _mainCamera = Camera.main;
-            if (_mainCamera == null) return transform.position;
+            if (!_mainCamera) return transform.position;
         }
 
         Vector3 spawnPoint;

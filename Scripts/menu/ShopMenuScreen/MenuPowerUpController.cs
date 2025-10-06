@@ -8,8 +8,8 @@ namespace menu.ShopMenuScreen
         public static MenuPowerUpController instance;
         public SaveLoadManager saveLoadManager;
         private PlayerSaveData playerSaveData;
-        public static int CurrencyData => instance.playerSaveData.currentCurrency;
-        public static List<PowerUpProgressionData> PowerUps => instance.playerSaveData.PowerUpProgression;
+        public static int? CurrencyData => instance?.playerSaveData?.currentCurrency;
+        public static List<PowerUpProgressionData> PowerUps => instance?.playerSaveData?.PowerUpProgression;
 
         void Awake()
         {

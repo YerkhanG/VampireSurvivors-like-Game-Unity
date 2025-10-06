@@ -17,7 +17,7 @@ public class OrbitModifier : SpellMods
         orbit.center = context.caster;
         orbit.radius = orbitRadius;
         orbit.duration = orbitDuration;
-        orbit.speed = orbitSpeed;
+        orbit.speed = orbitSpeed *= context.spellQueue.ProjectileSpeedModifier;
     }
 
     public override void ModifySpell(BaseSpell spell, SpellCastContext context)
