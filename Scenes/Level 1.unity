@@ -764,7 +764,7 @@ MonoBehaviour:
   skeletonSpawner: {fileID: 1585207218}
   teleportPoint: {fileID: 732559772}
   teleportTimer: 3
-  maxDistanceFromPlayer: 30
+  maxDistanceFromPlayer: 100
 --- !u!4 &443663378
 Transform:
   m_ObjectHideFlags: 0

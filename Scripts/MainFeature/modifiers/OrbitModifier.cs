@@ -10,7 +10,7 @@ public class OrbitModifier : SpellMods
         return spell is DamageSpell;
     }
 
-    public override void ModifyProjectile(GameObject projectile, SpellCastContext context)
+    public override void ModifyProjectile(GameObject projectile, SpellCastContext context, int totalProjectileCount)
     {
         var orbit = projectile.AddComponent<OrbitMovement>();
         
@@ -18,6 +18,7 @@ public class OrbitModifier : SpellMods
         orbit.radius = orbitRadius;
         orbit.duration = orbitDuration;
         orbit.speed = orbitSpeed *= context.spellQueue.ProjectileSpeedModifier;
+        orbit.totalProjectiles =  totalProjectileCount;
     }
 
     public override void ModifySpell(BaseSpell spell, SpellCastContext context)

@@ -76,7 +76,7 @@ public class SpellQueue : MonoBehaviour
         if (!_mainCamera)
         {
             InitializeCamera(); // Try to reinitialize if camera became null
-            if (_mainCamera == null) 
+            if (!_mainCamera) 
             {
                 Debug.LogWarning("Main camera not found!");
                 return;
@@ -122,7 +122,7 @@ public class SpellQueue : MonoBehaviour
         if (spellCopy is DamageSpell damageSpell && modifiers.Count > 0)
         {
             damageSpell.projectileSpeed *= ProjectileSpeedModifier;
-            CastModifiedDamageSpell(damageSpell, context, modifiers);
+            damageSpell.CastWithModifiers(context, modifiers);
         }
         else
         {
@@ -131,33 +131,6 @@ public class SpellQueue : MonoBehaviour
             damageSpellCopy.Cast(context);
         }
     }
-
-    private void CastModifiedDamageSpell(DamageSpell spell, SpellCastContext context, List<SpellMods> modifiers)
-    {
-        if (spell.projectilePrefab == null) return;
-        
-        GameObject projectile = Instantiate(
-            spell.projectilePrefab,
-            context.caster.position,
-            Quaternion.identity
-        );
-        
-        Projectile proj = projectile.GetComponent<Projectile>();
-        if (proj)
-        {
-            proj.Damage = spell.damage;
-            proj.Speed = spell.projectileSpeed;
-            proj.Pierce = spell.pierce;
-            proj.Direction = context.direction.normalized;
-        }
-        proj.SetSpell(spell);
-        // Apply all projectile modifiers
-        foreach (var modifier in modifiers)
-        {
-            modifier.ModifyProjectile(projectile, context);
-        }
-    }
-
     public void SwapActiveSpells(int index1, int index2)
     {
         if (index1 < 0 || index2 < 0 || index1 >= queue.Count || index2 >= queue.Count) return;

@@ -44,8 +44,8 @@ public class EnemySpawnerManager : MonoBehaviour
                 continue;
             }
 
-            var distance = enemy.transform.position - teleportPos.position;
-            if (distance.magnitude > maxDistance)
+            var distance = (enemy.transform.position - teleportPos.position).sqrMagnitude;
+            if (distance > maxDistance)
             {
                 TeleportEnemyToPlayer(teleportPos, enemy, spawner);
             }

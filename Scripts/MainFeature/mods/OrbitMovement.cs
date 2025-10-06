@@ -1,3 +1,4 @@
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 
 public class OrbitMovement : MonoBehaviour
@@ -12,6 +13,8 @@ public class OrbitMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 previousPosition;
     private bool isInitialized = false;
+    public int totalProjectiles = 1;
+    
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,6 +30,9 @@ public class OrbitMovement : MonoBehaviour
         }
         if (center != null)
         {
+            angle= Random.Range(0f, 360f) * Mathf.Deg2Rad;
+            float radiusVariation = Random.Range(0f, totalProjectiles * 0.3f);
+            radius += radiusVariation;
             Vector3 offset = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
             transform.position = center.position + offset;
             previousPosition = transform.position;
@@ -45,7 +51,7 @@ public class OrbitMovement : MonoBehaviour
             return;
         }
         
-        if (center != null)
+        if (center)
         {
             angle += speed * Time.deltaTime;
 

@@ -10,7 +10,7 @@ public class ForkingModifier : SpellMods
         return spell is DamageSpell;
     }
 
-    public override void ModifyProjectile(GameObject projectile, SpellCastContext context)
+    public override void ModifyProjectile(GameObject projectile, SpellCastContext context, int totalProjectileCount)
     {
         var forking = projectile.AddComponent<ForkingProjectile>();
         forking.forkingCount = forkingCount;

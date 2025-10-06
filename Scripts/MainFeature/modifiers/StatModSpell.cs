@@ -12,10 +12,11 @@ public class StatModSpell : SpellMods
         spell.spellCooldown *= cooldownMod;
     }
 
-    public override void ModifyProjectile(GameObject projectile, SpellCastContext context)
+    public override void ModifyProjectile(GameObject projectile, SpellCastContext context, int totalProjectileCount)
     {
-         
+        throw new System.NotImplementedException();
     }
+
 
     public override bool CanModify(BaseSpell spell)
     {

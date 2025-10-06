@@ -22,7 +22,7 @@ MonoBehaviour:
   hitSound: {fileID: 0}
   damage: 200
   projectileSpeed: 15
-  projectileCount: 100
+  projectileCount: 10
   spreadAngle: 15
   pierce: 1
   timeToLive: 2
